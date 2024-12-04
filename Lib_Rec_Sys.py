@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-st.markdown('[GitHub](https://github.com/NitishRH07/Lib-Recommandation-Sys/edit/main/Lib_Rec_Sys.py)')
+
 books_data = pickle.load(open("books_list1.pkl", 'rb'))
 
 
