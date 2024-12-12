@@ -23,18 +23,21 @@ selectvalue = st.selectbox("Select a book:", books_data['title'])
 
 
 def recommend_books(book_title):
-    try: 
+    try:
         idx = books_data[books_data['title'] == book_title].index[0]
+        if idx >= cosine_sim1.shape[0]:  # Check if index is valid
+            st.error("The selected book's index is out of bounds for the similarity matrix.")
+            return idx, []
     except IndexError:
         st.error("The selected book is not in the database.")
-        return idx, []
+        return None, []
 
-    
+    # Compute similarity scores
     sim_scores = list(enumerate(cosine_sim1[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:6]  
+    sim_scores = sim_scores[1:6]  # Exclude the book itself
 
-    
+    # Fetch recommended book indices
     book_indices = [i[0] for i in sim_scores]
     recommendations = [(books_data['title'].iloc[i], i) for i in book_indices]
     return idx, recommendations
